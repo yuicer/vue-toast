@@ -1,0 +1,28 @@
+{
+  "name": "@yuicer/vue-toast",
+  "version": "1.0.0",
+  "description": "toast fro vue",
+  "main": "dist/vueToast.umd.min.js",
+  "scripts": {
+    "build": "vue-cli-service build --target lib --name vueToast ./index.js && rm dist/demo.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuicer/vue-toast.git"
+  },
+  "keywords": [
+    "yuicer",
+    "toast"
+  ],
+  "author": "yuicer@yeah.net",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yuicer/vue-toast/issues"
+  },
+  "homepage": "https://github.com/yuicer/vue-toast#readme",
+  "devDependencies": {
+    "@vue/cli-service-global": "^3.2.3",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0"
+  }
+}
