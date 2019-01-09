@@ -15,7 +15,7 @@ $color-shadow: rgba(0, 0, 0, 0.7);
   color: $color-primary;
 }
 .toast {
-  font-size: 0.16rem;
+  font-size: 16px;
   position: absolute;
   text-align: center;
   top: 50%;
@@ -27,22 +27,22 @@ $color-shadow: rgba(0, 0, 0, 0.7);
 .tip {
   color: #fff;
   background: rgba(0, 0, 0, 0.7);
-  border-radius: 0.06rem;
-  padding: 0.1rem 0.2rem;
-  min-width: 1.04rem;
-  max-width: 2.95rem;
+  border-radius: 6px;
+  padding: 10px 20px;
+  min-width: 104px;
+  max-width: 295px;
 }
 .confirm {
-  width: 3rem;
-  border-radius: 0.1rem;
+  width: 300px;
+  border-radius: 10px;
   background: #fff;
   > .content {
-    padding: 0.36rem 0.2rem;
+    padding: 36px 20px;
   }
   > .options {
-    height: 0.48rem;
-    line-height: 0.48rem;
-    font-size: 0.18rem;
+    height: 48px;
+    line-height: 48px;
+    font-size: 18px;
     position: relative;
     overflow: hidden;
     &::after {
@@ -75,17 +75,17 @@ $color-shadow: rgba(0, 0, 0, 0.7);
   }
 }
 .alert {
-  width: 3rem;
-  border-radius: 0.1rem;
+  width: 300px;
+  border-radius: 10px;
   background: #fff;
   > .content {
-    padding: 0.36rem 0.2rem;
+    padding: 36px 20px;
   }
   > .options {
-    font-size: 0.18rem;
+    font-size: 18px;
     border-top: 1px solid $color-dividers;
-    height: 0.48rem;
-    line-height: 0.48rem;
+    height: 48px;
+    line-height: 48px;
     position: relative;
     overflow: hidden;
     color: $color-link;
@@ -106,8 +106,8 @@ $color-shadow: rgba(0, 0, 0, 0.7);
       <div class="confirm toast" v-else-if="isConfirmShow">
         <div class="content">{{msg}}</div>
         <div class="options">
-          <div @click="closeConfirm(false)">{{words[0] || '取消'}}</div>
-          <div @click="closeConfirm(true)">{{words[1] || '确认'}}</div>
+          <div @click="closeConfirm(false)">{{words[0]}}</div>
+          <div @click="closeConfirm(true)">{{words[1]}}</div>
         </div>
       </div>
 
@@ -115,14 +115,25 @@ $color-shadow: rgba(0, 0, 0, 0.7);
       <div class="alert toast" v-else-if="isAlertShow">
         <div class="content">{{msg}}</div>
         <div class="options">
-          <div @click="closeAlert()">{{words.toString() || '确定'}}</div>
+          <div @click="closeAlert()">{{words.toString()}}</div>
         </div>
       </div>
     </div>
   </transition>
 </template>
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+
+interface Param {
+  type: string
+  msg: string
+  callback: (res: boolean) => {}
+  words?: string[] | string
+  durationTime?: number
+}
+
+export default Vue.extend({
+  name: 'vue-toast',
   data() {
     return {
       isDisplay: false,
@@ -140,17 +151,17 @@ export default {
   },
 
   methods: {
-    transformer({ type, msg, words, durationTime, callback = () => {} }) {
-      // only one toast runs the time
+    transformer({ type, msg, callback, words, durationTime }: Param) {
+      // only one instance runs at a time
       if (this.isDisplay) {
         return
       }
       this.isDisplay = true
 
-      msg && (this.msg = msg)
-      words && (this.words = words)
-      durationTime && (this.durationTime = durationTime)
+      this.msg = msg
       this.callback = callback
+      if (words) this.words = words
+      if (durationTime) this.durationTime = durationTime
 
       if (type === 'tip') {
         this.isTipShow = true
@@ -162,24 +173,24 @@ export default {
         this.isAlertShow = true
       }
     },
-    closeTip() {
+    closeTip(): void {
       setTimeout(() => {
         this.isTipShow = false
         this.close()
       }, this.durationTime)
     },
-    closeConfirm(result = true) {
+    closeConfirm(result: boolean = true): void {
       this.isConfirmShow = false
       this.close(result)
     },
-    closeAlert() {
+    closeAlert(): void {
       this.isAlertShow = false
       this.close()
     },
-    close(result = true) {
+    close(result: boolean = true): void {
       this.isDisplay = false
       this.callback(result)
     }
   }
-}
+})
 </script>

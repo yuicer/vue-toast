@@ -1,9 +1,10 @@
-import Toast from './src/index.js'
+import Toast from './src/index'
 
 let toast = {}
 
 export default {
-  install: (Vue, options = {}) => {
+  install: (Vue: any, options?: object) => {
+    options = options || {}
     Vue.prototype.$toast = toast = Toast(Vue, options)
   }
 }

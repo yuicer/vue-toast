@@ -1,28 +1,38 @@
 {
   "name": "@yuicer/vue-toast",
   "version": "1.0.0",
-  "description": "toast fro vue",
+  "description": "toast for vue",
+  "author": "yuicer@yeah.net",
+  "keywords": [
+    "yuicer",
+    "vue",
+    "toast"
+  ],
+  "license": "ISC",
   "main": "dist/vueToast.umd.min.js",
-  "scripts": {
-    "build": "vue-cli-service build --target lib --name vueToast ./index.js && rm dist/demo.html"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yuicer/vue-toast.git"
   },
-  "keywords": [
-    "yuicer",
-    "toast"
+  "typings": "types/index.d.ts",
+  "files": [
+    "src/*.js",
+    "dist/*.js",
+    "types/*.d.ts"
   ],
-  "author": "yuicer@yeah.net",
-  "license": "ISC",
+  "scripts": {
+    "build": "vue-cli-service build --target lib --name vueToast ./index.ts && rm dist/demo.html"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.3.0",
+    "@vue/cli-plugin-typescript": "^3.3.0",
+    "@vue/cli-service-global": "^3.2.3",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "typescript": "^3.0.0"
+  },
   "bugs": {
     "url": "https://github.com/yuicer/vue-toast/issues"
   },
-  "homepage": "https://github.com/yuicer/vue-toast#readme",
-  "devDependencies": {
-    "@vue/cli-service-global": "^3.2.3",
-    "node-sass": "^4.11.0",
-    "sass-loader": "^7.1.0"
-  }
+  "homepage": "https://github.com/yuicer/vue-toast#readme"
 }
