@@ -1,14 +1,23 @@
-import Vue, { PluginFunction } from 'vue'
+import { PluginFunction } from 'vue'
+
+export interface toastInstance {
+  tip(): void
+  alert(): void
+  confirm(): void
+  // tip: () => {}
+  // alert: () => {}
+  // confirm: () => {}
+}
 
 export declare class Toast {
   constructor(options?: Options)
   static install: PluginFunction<never>
+
+  tip(): void
+  alert(): void
+  confirm(): void
 }
 
-export interface Options {}
+interface Options {}
 
-export interface toast {
-  tip: () => {}
-  alert: () => {}
-  confirm: () => {}
-}
+export declare const toast: toastInstance

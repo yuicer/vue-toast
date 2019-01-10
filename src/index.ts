@@ -9,7 +9,7 @@ interface Param {
 class Toast {
   instance: any
 
-  constructor(Vue: any, options = {}) {
+  constructor(Vue: any, options?: object) {
     this.initInstance(Vue)
   }
   initInstance(Vue: any) {
@@ -50,4 +50,4 @@ const open = function(
   })
 }
 
-export default (Vue: any, options: object) => new Toast(Vue, options)
+export default Toast

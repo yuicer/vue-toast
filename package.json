@@ -9,7 +9,7 @@
     "toast"
   ],
   "license": "ISC",
-  "main": "dist/vueToast.umd.min.js",
+  "main": "dist/vueToast.common.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yuicer/vue-toast.git"

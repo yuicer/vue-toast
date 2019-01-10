@@ -3,10 +3,10 @@
  */
 
 import Vue from 'vue'
-import Toast from './index'
+import toastInstance from './index'
 
 declare module 'vue/types/vue' {
   interface Vue {
-    $toast: Toast
+    $toast: toastInstance
   }
 }
