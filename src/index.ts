@@ -12,19 +12,19 @@ class Toast {
   constructor(Vue: any, options?: object) {
     this.initInstance(Vue)
   }
-  initInstance(Vue: any) {
+  initInstance(Vue: any): void {
     const ToastConstructor = Vue.extend(ToastComponent)
     const node = document.createElement('div')
     document.body.appendChild(node)
     this.instance = new ToastConstructor().$mount(node)
   }
-  tip(msg: string, { durationTime = 1500 } = {}) {
+  tip(msg: string, { durationTime = 1500 } = {}): Promise<boolean> {
     return open.call(this, 'tip', { msg, durationTime })
   }
-  alert(msg: string, { words = '确定' } = {}) {
+  alert(msg: string, { words = '确定' } = {}): Promise<boolean> {
     return open.call(this, 'alert', { msg, words })
   }
-  confirm(msg: string, { words = ['取消', '确定'] } = {}) {
+  confirm(msg: string, { words = ['取消', '确定'] } = {}): Promise<boolean> {
     return open.call(this, 'confirm', { msg, words })
   }
 }
@@ -33,7 +33,7 @@ const open = function(
   type: string,
   { msg, durationTime, words }: Param
 ): Promise<boolean> {
-  return new Promise<boolean>((reslove, reject) => {
+  return new Promise((reslove, reject) => {
     const param = {
       type,
       msg,

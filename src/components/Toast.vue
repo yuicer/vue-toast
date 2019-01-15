@@ -4,7 +4,7 @@ $color-link: #408fff;
 $color-primary: #242629;
 $color-dividers: #e3e5e8;
 $color-shadow: rgba(0, 0, 0, 0.7);
-.toast-box {
+.vue-toast-box {
   position: fixed;
   top: 0;
   left: 0;
@@ -13,89 +13,99 @@ $color-shadow: rgba(0, 0, 0, 0.7);
   z-index: 9999;
   transition: all 0.2s;
   color: $color-primary;
-}
-.toast {
-  font-size: 16px;
-  position: absolute;
-  text-align: center;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
-  word-break: break-all;
-}
-.tip {
-  color: #fff;
-  background: rgba(0, 0, 0, 0.7);
-  border-radius: 6px;
-  padding: 10px 20px;
-  min-width: 104px;
-  max-width: 295px;
-}
-.confirm {
-  width: 300px;
-  border-radius: 10px;
-  background: #fff;
-  > .content {
-    padding: 36px 20px;
+
+  .toast {
+    font-size: 16px;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    word-break: break-all;
   }
-  > .options {
-    height: 48px;
-    line-height: 48px;
-    font-size: 18px;
-    position: relative;
-    overflow: hidden;
-    &::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      height: 1px;
-      width: 100%;
-      transform: scaleY(0.5);
-      background: $color-dividers;
+  .tip {
+    color: #fff;
+    background: $color-shadow;
+    border-radius: 6px;
+    padding: 10px 20px;
+    min-width: 104px;
+    max-width: 295px;
+  }
+  .confirm {
+    width: 300px;
+    border-radius: 10px;
+    background: #fff;
+    > .content {
+      padding: 36px 20px;
     }
-    > div {
-      float: left;
-      width: 50%;
-      &:last-child {
-        position: relative;
-        color: $color-link;
-        &::after {
-          content: '';
-          position: absolute;
-          left: 0;
-          height: 100%;
-          width: 1px;
-          transform: scaleX(0.5);
-          background: $color-dividers;
+    > .options {
+      height: 48px;
+      line-height: 48px;
+      font-size: 18px;
+      position: relative;
+      overflow: hidden;
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 1px;
+        width: 100%;
+        transform: scaleY(0.5);
+        background: $color-dividers;
+      }
+      > div {
+        float: left;
+        width: 50%;
+        &:last-child {
+          position: relative;
+          color: $color-link;
+          &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            height: 100%;
+            width: 1px;
+            transform: scaleX(0.5);
+            background: $color-dividers;
+          }
         }
       }
     }
   }
+  .alert {
+    width: 300px;
+    border-radius: 10px;
+    background: #fff;
+    > .content {
+      padding: 36px 20px;
+    }
+    > .options {
+      font-size: 18px;
+      border-top: 1px solid $color-dividers;
+      height: 48px;
+      line-height: 48px;
+      position: relative;
+      overflow: hidden;
+      color: $color-link;
+    }
+  }
 }
-.alert {
-  width: 300px;
-  border-radius: 10px;
-  background: #fff;
-  > .content {
-    padding: 36px 20px;
-  }
-  > .options {
-    font-size: 18px;
-    border-top: 1px solid $color-dividers;
-    height: 48px;
-    line-height: 48px;
-    position: relative;
-    overflow: hidden;
-    color: $color-link;
-  }
+.vue-toast-fade-enter-active,
+.vue-toast-fade-leave-active {
+  transition: opacity 0.2s;
+}
+
+.vue-toast-fade-enter,
+.vue-toast-fade-leave-active {
+  opacity: 0;
 }
 </style>
 <template>
-  <transition name="fade" mode="out-in">
+  <transition name="vue-toast-fade" mode="out-in">
     <div
-      class="toast-box"
+      class="vue-toast-box"
       v-if="isDisplay"
       :style="{backgroundColor:!isTipShow?'rgba(0,0,0,0.7)':''}"
     >
@@ -125,11 +135,11 @@ $color-shadow: rgba(0, 0, 0, 0.7);
 import Vue from 'vue'
 
 interface Param {
-  type: string
+  type: string // type of the toast
   msg: string
-  callback: (res: boolean) => {}
   words?: string[] | string
   durationTime?: number
+  callback: (res: boolean) => {}
 }
 
 export default Vue.extend({
@@ -151,7 +161,7 @@ export default Vue.extend({
   },
 
   methods: {
-    transformer({ type, msg, callback, words, durationTime }: Param) {
+    transformer({ type, msg, callback, words, durationTime }: Param): void {
       // only one instance runs at a time
       if (this.isDisplay) {
         return
